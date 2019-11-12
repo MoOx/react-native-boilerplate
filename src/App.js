@@ -16,15 +16,13 @@ import {
   StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import Header from './NewAppScreen/Header';
+import LearnMoreLinks from './NewAppScreen/LearnMoreLinks';
+import Colors from './NewAppScreen/Colors';
+import DebugInstructions from './NewAppScreen/DebugInstructions';
+import ReloadInstructions from './NewAppScreen/ReloadInstructions';
 
-const App: () => React$Node = () => {
+const App /*: () => React$Node*/ = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
