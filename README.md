@@ -1,5 +1,11 @@
 # react-native-boilerplate
 
+> React Native (+Web) template
+
+🎉 Made for the Youtube show [How To React](https://www.youtube.com/channel/UCn_edMm2hg7k58E4eQGU7pA)!
+
+![Hello World Preview](preview.jpg)
+
 ## Installation
 
 Before installing the project, you have to verify that you have on you machine
