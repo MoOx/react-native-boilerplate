@@ -2,7 +2,7 @@
 
 > React Native (+Web) template
 
-🎉 Made for the Youtube show [How To React](https://www.youtube.com/channel/UCn_edMm2hg7k58E4eQGU7pA)!
+🎉 Made during the Youtube show [How To React](https://www.youtube.com/playlist?list=PLUzgQ3V9t75NTjEeL-1VB64V9nk2XovXz)!
 
 ![Hello World Preview](preview.jpg)
 
