@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  useWindowDimensions,
 } from 'react-native';
 
 import Header from './NewAppScreen/Header';
@@ -22,64 +23,13 @@ import Colors from './NewAppScreen/Colors';
 import DebugInstructions from './NewAppScreen/DebugInstructions';
 import ReloadInstructions from './NewAppScreen/ReloadInstructions';
 
-const App /*: () => React$Node*/ = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
-
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
   engine: {
     position: 'absolute',
     right: 0,
   },
-  body: {
-    backgroundColor: Colors.white,
+  scrollView: {
+    backgroundColor: Colors.lighter,
   },
   sectionContainer: {
     marginTop: 32,
@@ -108,5 +58,52 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
+const App /*: () => React$Node*/ = () => {
+  const windowDimensions = useWindowDimensions();
+  return (
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView>
+        {global.HermesInternal == null ? null : (
+          <View style={styles.engine}>
+            <Text style={styles.footer}>Engine: Hermes</Text>
+          </View>
+        )}
+        <ScrollView
+          horizontal={true}
+          pagingEnabled={true}
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <Header />
+          <View
+            style={[styles.sectionContainer, {width: windowDimensions.width}]}>
+            <Text style={styles.sectionTitle}>Step One</Text>
+            <Text style={styles.sectionDescription}>
+              Edit <Text style={styles.highlight}>App.js</Text> to change this
+              screen and then come back to see your edits.
+            </Text>
+            <Text style={styles.sectionTitle}>See Your Changes</Text>
+            <Text style={styles.sectionDescription}>
+              <ReloadInstructions />
+            </Text>
+            <Text style={styles.sectionTitle}>Debug</Text>
+            <Text style={styles.sectionDescription}>
+              <DebugInstructions />
+            </Text>
+          </View>
+          <View
+            style={[styles.sectionContainer, {width: windowDimensions.width}]}>
+            <Text style={styles.sectionTitle}>Learn More</Text>
+            <Text style={styles.sectionDescription}>
+              Read the docs to discover what to do next:
+            </Text>
+            <LearnMoreLinks />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
+  );
+};
 
 export default App;
