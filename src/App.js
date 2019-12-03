@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 24,
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   sectionDescription: {
-    marginTop: 8,
+    paddingVertical: 20,
     fontSize: 18,
     fontWeight: '400',
     color: Colors.dark,
@@ -75,7 +77,10 @@ const App /*: () => React$Node*/ = () => {
           pagingEnabled={true}
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
+          <View
+            style={[styles.sectionContainer, {width: windowDimensions.width}]}>
+            <Header />
+          </View>
           <View
             style={[styles.sectionContainer, {width: windowDimensions.width}]}>
             <Text style={styles.sectionTitle}>Step One</Text>
@@ -94,11 +99,15 @@ const App /*: () => React$Node*/ = () => {
           </View>
           <View
             style={[styles.sectionContainer, {width: windowDimensions.width}]}>
-            <Text style={styles.sectionTitle}>Learn More</Text>
-            <Text style={styles.sectionDescription}>
-              Read the docs to discover what to do next:
-            </Text>
-            <LearnMoreLinks />
+            <ScrollView stickyHeaderIndices={[0]}>
+              <View style={{backgroundColor: Colors.lighter}}>
+                <Text style={styles.sectionTitle}>Learn More</Text>
+                <Text style={styles.sectionDescription}>
+                  Read the docs to discover what to do next:
+                </Text>
+              </View>
+              <LearnMoreLinks />
+            </ScrollView>
           </View>
         </ScrollView>
       </SafeAreaView>
