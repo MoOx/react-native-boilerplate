@@ -59,10 +59,72 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
+  paginator: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  paginatorDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 7,
+    backgroundColor: Colors.primary,
+    marginHorizontal: 3,
+    opacity: 0.25,
+  },
+  paginatorDotActive: {
+    opacity: 1,
+  },
 });
+
+const pages = [
+  <Header />,
+  <>
+    <Text style={styles.sectionTitle}>Step One</Text>
+    <Text style={styles.sectionDescription}>
+      Edit <Text style={styles.highlight}>App.js</Text> to change this screen
+      and then come back to see your edits.
+    </Text>
+    <Text style={styles.sectionTitle}>See Your Changes</Text>
+    <Text style={styles.sectionDescription}>
+      <ReloadInstructions />
+    </Text>
+    <Text style={styles.sectionTitle}>Debug</Text>
+    <Text style={styles.sectionDescription}>
+      <DebugInstructions />
+    </Text>
+  </>,
+  <ScrollView stickyHeaderIndices={[0]}>
+    <View style={{backgroundColor: Colors.lighter}}>
+      <Text style={styles.sectionTitle}>Learn More</Text>
+      <Text style={styles.sectionDescription}>
+        Read the docs to discover what to do next:
+      </Text>
+    </View>
+    <LearnMoreLinks />
+  </ScrollView>,
+];
 
 const App /*: () => React$Node*/ = () => {
   const windowDimensions = useWindowDimensions();
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  const handleMomentumScrollEnd = React.useCallback(
+    event => {
+      const x = event.nativeEvent.contentOffset.x;
+      const index = Math.round(x / windowDimensions.width);
+      if (index !== currentIndex) {
+        setCurrentIndex(index);
+      }
+    },
+    [currentIndex, windowDimensions.width],
+  );
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -72,44 +134,37 @@ const App /*: () => React$Node*/ = () => {
             <Text style={styles.footer}>Engine: Hermes</Text>
           </View>
         )}
-        <ScrollView
-          horizontal={true}
-          pagingEnabled={true}
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <View
-            style={[styles.sectionContainer, {width: windowDimensions.width}]}>
-            <Header />
-          </View>
-          <View
-            style={[styles.sectionContainer, {width: windowDimensions.width}]}>
-            <Text style={styles.sectionTitle}>Step One</Text>
-            <Text style={styles.sectionDescription}>
-              Edit <Text style={styles.highlight}>App.js</Text> to change this
-              screen and then come back to see your edits.
-            </Text>
-            <Text style={styles.sectionTitle}>See Your Changes</Text>
-            <Text style={styles.sectionDescription}>
-              <ReloadInstructions />
-            </Text>
-            <Text style={styles.sectionTitle}>Debug</Text>
-            <Text style={styles.sectionDescription}>
-              <DebugInstructions />
-            </Text>
-          </View>
-          <View
-            style={[styles.sectionContainer, {width: windowDimensions.width}]}>
-            <ScrollView stickyHeaderIndices={[0]}>
-              <View style={{backgroundColor: Colors.lighter}}>
-                <Text style={styles.sectionTitle}>Learn More</Text>
-                <Text style={styles.sectionDescription}>
-                  Read the docs to discover what to do next:
-                </Text>
+        <View>
+          <ScrollView
+            horizontal={true}
+            pagingEnabled={true}
+            showsHorizontalScrollIndicator={false}
+            contentInsetAdjustmentBehavior="automatic"
+            onMomentumScrollEnd={handleMomentumScrollEnd}
+            style={styles.scrollView}>
+            {pages.map((page, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.sectionContainer,
+                  {width: windowDimensions.width},
+                ]}>
+                {page}
               </View>
-              <LearnMoreLinks />
-            </ScrollView>
+            ))}
+          </ScrollView>
+          <View style={styles.paginator}>
+            {pages.map((page, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.paginatorDot,
+                  currentIndex === index && styles.paginatorDotActive,
+                ]}
+              />
+            ))}
           </View>
-        </ScrollView>
+        </View>
       </SafeAreaView>
     </>
   );
