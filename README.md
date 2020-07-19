@@ -11,7 +11,7 @@ The following command will help you to use this boilerplate as a template to
 create a fresh react native app!
 
 ```console
-npx react-native init ProjectName --template react-native-boilerplate
+npx react-native init ProjectName --template https://github.com/MoOx/react-native-boilerplate
 ```
 
 _⚠️ Replace `ProjectName` by your actual project name._
